@@ -58,26 +58,46 @@
       thisProduct.id = id;
       thisProduct.data = data;
       thisProduct.renderInMenu();
-      console.log('new Product:', thisProduct);
+      thisProduct.initAccordion();
+      //console.log('new Product:', thisProduct);
     }
     renderInMenu() {
       const thisProduct = this;
       const generatedHTML = templates.menuProduct(thisProduct.data);/* generate HTML based on template */
-      console.log('generatedHTML', generatedHTML);
+      //console.log('generatedHTML', generatedHTML);
       thisProduct.element = utils.createDOMFromHTML(generatedHTML); /* create element using utils.createElementFromHTML */
       const menuContainer = document.querySelector(select.containerOf.menu); /* find menu container */
       menuContainer.appendChild(thisProduct.element); /* add element to menu */
+    }
+    initAccordion() {
+      const thisProduct = this; 
+      const clicableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);/* find the clicable trigger (the element that should react to clicking) */
+      //console.log(clicableTrigger);
+      console.log('thisProduct', thisProduct);
+      clicableTrigger.addEventListener('click', function(event) { /* START: click event listener to trigger */
+        event.preventDefault(); /*prevent default action for event */
+        thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive); /* toggle active class on element of thisProduct */
+        console.log('clicked');
+        console.log(thisProduct.element);
+       const activeProducts = document.querySelectorAll(select.all.menuProducts);/* find all active products */
+       console.log(activeProducts);
+       for (let activeProduct of activeProducts) { /* START LOOP: for each active product */
+        if(activeProduct != thisProduct.element) {/* START: if the active product isn't the element of thisProduct */
+         activeProduct.classList.remove(classNames.menuProduct.wrapperActive);/* remove class active for the active product */
+        }/* END: if the active product isn't the elemnt of thisProduct */
+       }/* END LOOP: for each active product */
+      }); /* END: click event listener to trigger */
     }
   }
   const app = {
     initMenu: function() {
       const thisApp = this;
-      console.log('thisApp.data:', thisApp.data);
+      //console.log('thisApp.data:', thisApp.data);
       for(let productData in thisApp.data.products) {
         new Product(productData, thisApp.data.products[productData]);
       }
       const testProduct = new Product();
-      console.log('testProduct:', testProduct);
+      //console.log('testProduct:', testProduct);
     },
     initData: function() {
       const thisApp = this;
