@@ -85,15 +85,15 @@
       const thisProduct = this;
       // const clicableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable); /* find the clicable trigger (the element that should react to clicking) */
       //console.log(clicableTrigger);
-      console.log('thisProduct', thisProduct);
+      // console.log('thisProduct', thisProduct);
       thisProduct.accordionTrigger.addEventListener('click', function (event) {
         /* START: click event listener to trigger */
         event.preventDefault(); /*prevent default action for event */
         thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive); /* toggle active class on element of thisProduct */
-        console.log('clicked');
-        console.log(thisProduct.element);
+        // console.log('clicked');
+        // console.log(thisProduct.element);
         const activeProducts = document.querySelectorAll(select.all.menuProducts); /* find all active products */
-        console.log(activeProducts);
+        // console.log(activeProducts);
         for (let activeProduct of activeProducts) {
           /* START LOOP: for each active product */
           if (activeProduct != thisProduct.element) {
@@ -105,10 +105,45 @@
     }
     initOrderForm() {
       const thisProduct = this;
-      console.log('initOrderForm - thisProduct', thisProduct);
+      thisProduct.form.addEventListener('submit', function(event){
+        event.preventDefault();
+        thisProduct.processOrder();
+      });
+      for(let input of thisProduct.formInputs){
+        input.addEventListener('change', function(){
+          thisProduct.processOrder();
+        });
+      }
+      thisProduct.cartButton.addEventListener('click', function(event){
+        event.preventDefault();
+        thisProduct.processOrder();
+      });
+      // console.log('initOrderForm - thisProduct', thisProduct);
     }
     processOrder() {
-      //const thisProduct = this;
+      const thisProduct = this;
+      const formData = utils.serializeFormToObject(thisProduct.form); 
+      let price = thisProduct.data.price;
+      for (let paramId in thisProduct.data.params) {
+        // console.log(thisProduct.data.params[paramId]);
+        const param = thisProduct.data.params[paramId];
+        // console.log('param', param);
+        for (let optionId in param.options) {
+          const option = param.options[optionId];
+          const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1;
+          // console.log(optionSelected);
+          if (optionSelected && !option.default) {
+            price += option.price;
+            // console.log('price', price);
+          } else if (!optionSelected && option.default) {
+            price -= option.price;
+            // console.log('price', price);
+          }
+        }
+      }
+      thisProduct.priceElem.innerHTML = price;
+      console.log(price);
+      // console.log('formData', formData);
     }
   }
   const app = {
