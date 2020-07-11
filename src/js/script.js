@@ -168,8 +168,6 @@
     }
   }
 
-
-
   class AmountWidget {
     constructor(element) {
       const thisWidget = this;
@@ -208,7 +206,6 @@
       });
       thisWidget.linkIncrease.addEventListener('click', function (event) {
         event.preventDefault();
-        // console.log(thisWidget.value);
         thisWidget.setValue((thisWidget.value) + 1);
       });
     }
