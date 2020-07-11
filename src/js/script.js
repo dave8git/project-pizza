@@ -174,6 +174,7 @@
     constructor(element) {
       const thisWidget = this;
       thisWidget.getElements(element);
+      thisWidget.initActions();
       thisWidget.setValue(thisWidget.input.value);
       console.log('AmountWidget', thisWidget);
       console.log('constructor arguments:', element);
@@ -189,9 +190,8 @@
     setValue(value) {
       const thisWidget = this;
       const newValue = parseInt(value);
-
+    
       /* TODO: Add validation */
-
       thisWidget.value = newValue;
       thisWidget.announce();
       thisWidget.input.value = thisWidget.value;
