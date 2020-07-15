@@ -36,7 +36,9 @@ $base-size: 12px;
   &:hover {
     background: lighten($btn-bg, 3%);
   }
-  &.disabled, &[disabled] {
+
+  &.disabled,
+  &[disabled] {
     background: desaturate($btn-bg, 100%);
     border-color: desaturate($btn-border, 100%);
     cursor: not-allowed;
