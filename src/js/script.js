@@ -260,7 +260,10 @@
     }
     announce() {
       const thisWidget = this;
-      const event = new Event('updated');
+      const event = new CustomEvent('updated', {
+        bubbles: true
+      });
+
       thisWidget.element.dispatchEvent(event);
     }
   }
@@ -294,6 +297,12 @@
       thisCart.dom.toggleTrigger.addEventListener('click', function (event) {
         event.preventDefault();
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
+      });
+      thisCart.dom.productList.addEventListener('updated', function(){
+        thisCart.update(); 
+      });
+      thisCart.dom.productList.addEventListener('remove', function () {
+        thisCart.remove(event.detail.cartProduct);
       });
     }
     add(menuProduct) {
@@ -330,7 +339,14 @@
         }
       }
     }
-
+    remove(cartProduct) {
+      const thisCart = this;
+      console.log(thisCart.products);
+      const index = thisCart.products.indexOf(cartProduct);
+      thisCart.products.splice(index, 1);
+      cartProduct.dom.wrapper.remove();
+      this.update();
+    }
     
   }
 
@@ -346,7 +362,7 @@
       thisCartProduct.params = JSON.parse(JSON.stringify(menuProduct.params));
       thisCartProduct.getElements(element);
       thisCartProduct.initAmountWidget();
-      // thisCartProduct.initActions();
+      thisCartProduct.initActions();
 
       console.log('new CartProduct', thisCartProduct);
       console.log('productData', menuProduct);
@@ -373,7 +389,30 @@
         thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
       });
     }
-  
+    remove(){
+      const thisCartProduct = this;
+
+      const event = new CustomEvent('remove', {
+        bubbles: true,
+        detail: {
+          cartProduct: thisCartProduct,
+        },
+      });
+      thisCartProduct.dom.wrapper.dispatchEvent(event);
+      console.log(event);
+    }
+    initActions(){
+      const thisCartProduct = this;
+
+      thisCartProduct.dom.edit.addEventListener('click', function (event){
+        event.preventDefault();
+      });
+      thisCartProduct.dom.remove.addEventListener('click', function (event){
+        event.preventDefault();
+        thisCartProduct.remove();
+
+      });
+    }
   }
   const app = {
     initMenu: function () {
