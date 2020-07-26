@@ -1,5 +1,6 @@
 import {Product} from './components/Product.js';
 import {Cart} from './components/Cart.js';
+import {Booking} from './components/Booking.js';
 import {select, settings, classNames, templates} from './settings.js';
 const app = {
   initMenu: function () {
@@ -44,8 +45,20 @@ const app = {
   initPages: function() {
     const thisApp = this;
     thisApp.pages = Array.from(document.querySelector(select.containerOf.pages).children);
-    console.log(thisApp.pages);
     thisApp.navLinks = Array.from(document.querySelectorAll(select.nav.links));
+    console.log(thisApp.pages);
+    let pagesMatchingHash = [];
+
+    if (window.location.hash.length > 2) {
+      const idFromHash = window.location.hash.replace('#/', '');
+
+      pagesMatchingHash = thisApp.pages.filter(function (page) {
+        return page.id == idFromHash;
+      });
+    }
+
+    thisApp.activatePage(pagesMatchingHash.length ? pagesMatchingHash[0].id : thisApp.pages[0].id);
+    
 
     for (let link of thisApp.navLinks) {
       link.addEventListener('click', function (event) {
@@ -76,6 +89,14 @@ const app = {
     document.body.classList = pageId;
   },
 
+  initBooking: function() {
+    const thisApp = this; 
+    const reservationWidget = document.querySelector(select.containerOf.booking); 
+ 
+    thisApp.booking = new Booking(reservationWidget);
+
+    console.log('BOOKING', thisApp.booking);
+  },
   init: function () {
     const thisApp = this;
     console.log('*** App starting ***');
@@ -87,6 +108,7 @@ const app = {
     thisApp.initData();
     // thisApp.initMenu();
     thisApp.initCart();
+    thisApp.initBooking(); 
   },
 };
 app.init();
