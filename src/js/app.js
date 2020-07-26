@@ -41,6 +41,41 @@ const app = {
     thisApp.cart = new Cart(cartElem);
     console.log(thisApp);
   },
+  initPages: function() {
+    const thisApp = this;
+    thisApp.pages = Array.from(document.querySelector(select.containerOf.pages).children);
+    console.log(thisApp.pages);
+    thisApp.navLinks = Array.from(document.querySelectorAll(select.nav.links));
+
+    for (let link of thisApp.navLinks) {
+      link.addEventListener('click', function (event) {
+        const clickedElement = this;
+        event.preventDefault();
+
+        /* TODO: get page id from href*/
+        const pageId = clickedElement.getAttribute('href');
+        const href = pageId.replace('#', '');
+        /* TODO activate page*/
+        thisApp.activatePage(href);
+      });
+    }
+  },
+
+  activatePage: function (pageId) {
+    const thisApp = this;
+
+    for (let link of thisApp.navLinks) {
+      link.classList.toggle(classNames.nav.active, link.getAttribute('href') == '#' + pageId);
+      console.log('LINK', link);
+    }
+    for (let page of thisApp.pages) {
+      page.classList.toggle(classNames.nav.active, page.getAttribute('id') == pageId);
+      console.log('PAGE', page);
+    }
+    window.location.hash = '#/' + pageId;
+    document.body.classList = pageId;
+  },
+
   init: function () {
     const thisApp = this;
     console.log('*** App starting ***');
@@ -48,6 +83,7 @@ const app = {
     console.log('classNames:', classNames);
     console.log('settings:', settings);
     console.log('templates:', templates);
+    thisApp.initPages();
     thisApp.initData();
     // thisApp.initMenu();
     thisApp.initCart();
