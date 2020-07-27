@@ -17,9 +17,8 @@ export class Booking {
     thisBooking.dom.wrapper = element;
     // thisBooking.generatedDOM = utils.createDOMFromHTML(generatedHTML);
     thisBooking.dom.wrapper.appendChild(utils.createDOMFromHTML(generatedHTML));
-    thisBooking.dom.peopleAmount = thisBooking.generatedDOM.querySelector(select.booking.peopleAmount);
-    thisBooking.dom.hoursAmount = thisBooking.generatedDOM.querySelector(select.booking.hoursAmount);
-    thisBooking.appendChild(thisBooking.generatedDOM);
+    thisBooking.dom.peopleAmount = thisBooking.dom.wrapper.querySelector(select.booking.peopleAmount);
+    thisBooking.dom.hoursAmount = thisBooking.dom.wrapper.querySelector(select.booking.hoursAmount);
 
   }
   initWidget() {
