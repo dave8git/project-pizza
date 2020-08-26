@@ -13,7 +13,6 @@ export class Booking {
     const generatedHTML = templates.bookingWidget();
     thisBooking.dom = {};
 
-    utils.createDOMFromHTML(generatedHTML);
     thisBooking.dom.wrapper = element;
     // thisBooking.generatedDOM = utils.createDOMFromHTML(generatedHTML);
     thisBooking.dom.wrapper.appendChild(utils.createDOMFromHTML(generatedHTML));
