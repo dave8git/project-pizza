@@ -44,7 +44,7 @@ export class BaseWidget {
       bubbles: true
     });
 
-    thisWidget.element.dispatchEvent(event);
+    thisWidget.dom.wrapper.dispatchEvent(event);
   }
 
 }
