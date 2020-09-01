@@ -89,6 +89,7 @@ export class Booking {
       thisBooking.makeBooked(eventCurrent.date, eventCurrent.hour, eventCurrent.duration, eventCurrent.table);
     }
     console.log('thisBooking', thisBooking.booked);
+    console.log('bookings', bookings);
 
   }
   makeBooked(date, hour, duration, table) {
@@ -103,7 +104,16 @@ export class Booking {
     const lastBookedHour = bookingHour + duration;
 
     for (let tableBlockedHour = bookingHour; tableBlockedHour < lastBookedHour; tableBlockedHour += .5) {
-      console.log('!!!!!!!!', tableBlockedHour);
+
+      if (!thisBooking.booked[date][tableBlockedHour]) {
+        thisBooking.booked[date][tableBlockedHour] = [];
+      }
+
+
+      thisBooking.booked[date][tableBlockedHour].push(table);
+
+      console.log('thisBooking.booked', thisBooking.booked);
+      console.log('tableBlockedHouru', tableBlockedHour);
     }
 
 
