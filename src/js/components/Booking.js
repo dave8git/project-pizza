@@ -1,7 +1,8 @@
 import {
   templates,
   select,
-  settings
+  settings,
+  classNames
 } from '../settings.js';
 import {
   utils
@@ -35,6 +36,7 @@ export class Booking {
     thisBooking.dom.hoursAmount = thisBooking.dom.wrapper.querySelector(select.booking.hoursAmount);
     thisBooking.dom.datePicker = thisBooking.dom.wrapper.querySelector(select.widgets.datePicker.wrapper);
     thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
+    thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
   }
   initWidget() {
     const thisBooking = this;
@@ -43,6 +45,10 @@ export class Booking {
     thisBooking.hoursAmount = new AmountWidget(thisBooking.dom.hoursAmount);
     thisBooking.datePicker = new DatePicker(thisBooking.dom.datePicker);
     thisBooking.hourPicker = new HourPicker(thisBooking.dom.hourPicker);
+
+    thisBooking.dom.wrapper.addEventListener('updated',function() {
+      thisBooking.updateDOM();
+    });
   }
   getData() {
     const thisBooking = this;
@@ -63,6 +69,7 @@ export class Booking {
       eventsCurrent: settings.db.url + '/' + settings.db.event + '?' + params.eventsCurrent,
       eventsRepeat: settings.db.url + '/' + settings.db.event + '?' + params.eventsRepeat,
     };
+    console.log('booking: settings.db.url + ', urls.booking);
     console.log('getData urls', urls);
     Promise.all([
       fetch(urls.booking),
@@ -81,16 +88,30 @@ export class Booking {
       });
 
   }
-  parseData(bookings, eventsCurrent) {
+  parseData(bookings, eventsCurrent, eventsRepeat) {
     const thisBooking = this;
+    console.log('__', eventsRepeat);
     thisBooking.booked = {};
     console.log('eventsCurrent', eventsCurrent);
     for (const eventCurrent of eventsCurrent) {
       thisBooking.makeBooked(eventCurrent.date, eventCurrent.hour, eventCurrent.duration, eventCurrent.table);
     }
+    for (const booking of bookings) {
+      thisBooking.makeBooked(booking.date, booking.hour, booking.duration, booking.table);
+    }
+    const minDate = thisBooking.datePicker.minDate;
+    const maxDate = thisBooking.datePicker.maxDate;
+
+    for (let event of eventsRepeat) {
+      if (event.repeat === 'daily') {
+        for (let currentDate = minDate; currentDate < maxDate; currentDate = utils.addDays(currentDate, 1)) {
+          thisBooking.makeBooked(utils.dateToStr(currentDate), event.hour, event.duration, event.table);
+        }
+      }
+    }
     console.log('thisBooking', thisBooking.booked);
     console.log('bookings', bookings);
-
+    thisBooking.updateDOM();
   }
   makeBooked(date, hour, duration, table) {
     const thisBooking = this;
@@ -115,21 +136,26 @@ export class Booking {
       console.log('thisBooking.booked', thisBooking.booked);
       console.log('tableBlockedHouru', tableBlockedHour);
     }
+  }
+  updateDOM(){
+    const thisBooking = this;
+    thisBooking.date = thisBooking.datePicker.value;
+    thisBooking.hour = utils.hourToNumber(thisBooking.hourPicker.value);
 
+    thisBooking.choosenTable = null;
 
-    // const bookedHour = utils.hourToNumber(hour);
-    // thisBooking.booked = {
-    //   [date]: {
-    //     [bookedHour]: [table],
-    //   }
-    // };
-    // const lastBookedHour = bookedHour + duration;
-    // thisBooking.booked[date].push([lastBookedHour][table]);
+    for(let table of thisBooking.dom.tables){
+      let tableID = table.getAttribute(settings.booking.tableIdAttribute);
+      tableID = parseInt(tableID);
 
-    // console.log(lastBookedHour);
+      table.classList.remove(classNames.booking.tableSelected);
 
-    // for (let tableBookedHour = bookedHour; tableBookedHour < lastBookedHour;  ) {
+      if (thisBooking.booked[thisBooking.date] && thisBooking.booked[thisBooking.date][thisBooking.hour] && thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableID)){
+        table.classList.add(classNames.booking.tableBooked);
+      } else {
+        table.classList.remove(classNames.booking.tableBooked);
+      }
 
-    // }
+    }
   }
 }
