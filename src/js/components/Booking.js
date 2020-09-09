@@ -49,6 +49,7 @@ export class Booking {
     thisBooking.dom.wrapper.addEventListener('updated',function() {
       thisBooking.updateDOM();
     });
+    thisBooking.tableReservation();
   }
   getData() {
     const thisBooking = this;
@@ -137,6 +138,31 @@ export class Booking {
       console.log('tableBlockedHouru', tableBlockedHour);
     }
   }
+
+  tableReservation() {
+    const thisBooking = this;
+    for(let reservedTable of thisBooking.dom.tables) {
+      console.log('stoliki', reservedTable);
+    }
+
+  }
+
+  // sendReservation() {
+  //   const thisBooking = this;
+
+  //   // const payload = {
+  //   //   date: thisBooking.date,
+  //   //   hour: utils.numberToHour(thisBooking.hour),
+  //   //   table: thisBooking.tableUnbooked,
+  //   //   duration: thisBooking.hoursAmount.value,
+  //   //   people: thisBooking.peopleAmount.value,
+  //   //   phone: parseInt(thisBooking.dom.phone.value),
+  //   //   mail: thisBooking.dom.address.value,
+  //   //   starters: []
+  //   // };
+
+  // }
+
   updateDOM(){
     const thisBooking = this;
     thisBooking.date = thisBooking.datePicker.value;
