@@ -143,30 +143,26 @@ export class Booking {
     const thisBooking = this;
     for(let reservedTable of thisBooking.dom.tables) {
       console.log('stoliki', reservedTable);
+
+      reservedTable.addEventListener('click', function() {
+        if(reservedTable.classList.contains(classNames.booking.tableBooked)) {
+          alert('This table is occupied at this hour! Pick a different table.');
+        } else {
+          reservedTable.classList.add(classNames.booking.tableBooked);
+          alert('This table is unoccupied at requested date. Table was booked');
+        }
+      });
+
     }
 
   }
-
-  // sendReservation() {
-  //   const thisBooking = this;
-
-  //   // const payload = {
-  //   //   date: thisBooking.date,
-  //   //   hour: utils.numberToHour(thisBooking.hour),
-  //   //   table: thisBooking.tableUnbooked,
-  //   //   duration: thisBooking.hoursAmount.value,
-  //   //   people: thisBooking.peopleAmount.value,
-  //   //   phone: parseInt(thisBooking.dom.phone.value),
-  //   //   mail: thisBooking.dom.address.value,
-  //   //   starters: []
-  //   // };
-
-  // }
 
   updateDOM(){
     const thisBooking = this;
     thisBooking.date = thisBooking.datePicker.value;
     thisBooking.hour = utils.hourToNumber(thisBooking.hourPicker.value);
+
+    console.log(' utils.hourToNumber(thisBooking.hourPicker.value)', thisBooking.hour);
 
     thisBooking.choosenTable = null;
 
