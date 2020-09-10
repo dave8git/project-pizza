@@ -37,6 +37,7 @@ export class Booking {
     thisBooking.dom.datePicker = thisBooking.dom.wrapper.querySelector(select.widgets.datePicker.wrapper);
     thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
+    thisBooking.dom.form = thisBooking.dom.wrapper.querySelector(select.booking.form);
   }
   initWidget() {
     const thisBooking = this;
@@ -50,6 +51,10 @@ export class Booking {
       thisBooking.updateDOM();
     });
     thisBooking.tableReservation();
+    thisBooking.dom.form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      thisBooking.sendReservation();
+    });
   }
   getData() {
     const thisBooking = this;
@@ -155,6 +160,35 @@ export class Booking {
 
     }
 
+  }
+
+  sendReservation() {
+    const thisBooking = this;
+    const url = settings.db.url + '/' + settings.db.booking;
+    const payload = {
+      date: "2020-09-10",
+      hour: "18:00",
+      table: 2,
+      duration: 2,
+      ppl: 3,
+      starters: ["lemonWater"]
+    };
+    // for (let product in payload.products) {
+    //   payload.products.push(product.getData());
+    // }
+    console.log(payload);
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    };
+    fetch(url, options).then(function (response) {
+      return response.json();
+    }).then(function (parsedResponse) {
+      console.log('parsedResponse', parsedResponse);
+    });
   }
 
   updateDOM(){
