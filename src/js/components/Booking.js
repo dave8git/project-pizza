@@ -24,7 +24,7 @@ export class Booking {
     thisBooking.initWidget();
     thisBooking.getData();
 
-    thisBooking.selectedTable = [];
+    thisBooking.bookedTable = [];
   }
   render(element) {
     const thisBooking = this;
@@ -159,17 +159,10 @@ export class Booking {
           reservedTable.classList.add(classNames.booking.tableBooked);
           alert('This table is unoccupied at requested date. Table was booked');
           let idTable = reservedTable.getAttribute('data-table');
-          thisBooking.selectedTable.push(idTable);
-          console.log('____________', thisBooking.selectedTable);
+          thisBooking.bookedTable.push(idTable);
+          console.log('____________', thisBooking.bookedTable);
         }
       });
-      for(let reservedTable of thisBooking.dom.tables) {
-        if(reservedTable.classList.contains(classNames.booking.tableBooked)) {
-          console.log(reservedTable);
-          let idTable = reservedTable.getAttribute('data-table');
-          console.log('.....', idTable);
-        }
-      }
     }
 
   }
