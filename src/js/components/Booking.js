@@ -40,6 +40,9 @@ export class Booking {
     thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
     thisBooking.dom.form = thisBooking.dom.wrapper.querySelector(select.booking.form);
+    thisBooking.dom.starters = thisBooking.dom.wrapper.querySelectorAll(select.booking.starters);
+    thisBooking.dom.phone = thisBooking.dom.wrapper.querySelector(select.booking.phone);
+    thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(select.booking.address);
   }
   initWidget() {
     const thisBooking = this;
@@ -176,8 +179,10 @@ export class Booking {
       date: thisBooking.date,
       hour: thisBooking.hourPicker.correctValue,
       // table: thisBooking.,
-      duration: 2,
-      ppl: 3,
+      duration: thisBooking.dom.hoursAmount.input.value,
+      ppl: thisBooking.peopleAmount,
+      phone: thisBooking.dom.phone.value,
+      mail: thisBooking.dom.address.value,
       starters: ['lemonWater']
     };
     // for (let product in payload.products) {
