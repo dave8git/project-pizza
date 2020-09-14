@@ -23,8 +23,6 @@ export class Booking {
     thisBooking.render(element);
     thisBooking.initWidget();
     thisBooking.getData();
-
-    thisBooking.bookedTable = [];
   }
   render(element) {
     const thisBooking = this;
@@ -161,8 +159,7 @@ export class Booking {
         } else {
           reservedTable.classList.add(classNames.booking.tableBooked);
           alert('This table is unoccupied at requested date. Table was booked');
-          let idTable = reservedTable.getAttribute('data-table');
-          thisBooking.bookedTable.push(idTable);
+          thisBooking.tableID = reservedTable.getAttribute('data-table');
           console.log('____________', thisBooking.bookedTable);
         }
       });
@@ -177,10 +174,10 @@ export class Booking {
 
     const payload = {
       date: thisBooking.date,
-      hour: thisBooking.hourPicker.correctValue,
-      // table: thisBooking.,
-      duration: thisBooking.dom.hoursAmount.input.value,
-      ppl: thisBooking.peopleAmount,
+      hour: utils.numberToHour(thisBooking.hour),
+      table: thisBooking.tableID,
+      duration: thisBooking.hoursAmount.value,
+      ppl: thisBooking.peopleAmount.value,
       phone: thisBooking.dom.phone.value,
       mail: thisBooking.dom.address.value,
       starters: ['lemonWater']
@@ -201,6 +198,8 @@ export class Booking {
       return response.json();
     }).then(function (parsedResponse) {
       console.log('parsedResponse', parsedResponse);
+      thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
+      thisBooking.updateDOM();
     });
   }
 
