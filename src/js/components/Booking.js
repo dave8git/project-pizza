@@ -206,8 +206,9 @@ export class Booking {
   updateDOM(){
     const thisBooking = this;
     thisBooking.date = thisBooking.datePicker.value;
-    thisBooking.hour = utils.hourToNumber(thisBooking.hourPicker.value);
-
+    console.log('thisBooking.datePicker.value', thisBooking.datePicker.value);
+    thisBooking.hour = utils.numberToHour(thisBooking.hourPicker.value);
+    console.log('thisBooking.hour', thisBooking.hour);
     console.log(' utils.hourToNumber(thisBooking.hourPicker.value)', thisBooking.hour);
 
     thisBooking.choosenTable = null;
