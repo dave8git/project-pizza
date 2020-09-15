@@ -93,6 +93,7 @@ export class Booking {
         ]);
       })
       .then(function ([bookings, eventsCurrent, eventsRepeat]) {
+        console.log('EVENTS_CURRENT', eventsCurrent);
         thisBooking.parseData(bookings, eventsCurrent, eventsRepeat);
       });
 
@@ -182,7 +183,7 @@ export class Booking {
       mail: thisBooking.dom.address.value,
       starters: ['lemonWater']
     };
-    console.log('payload.hour', payload.hour);
+    console.log('payload', payload);
     // for (let product in payload.products) {
     //   payload.products.push(product.getData());
     // }
@@ -195,11 +196,15 @@ export class Booking {
       },
       body: JSON.stringify(payload),
     };
+
     fetch(url, options).then(function (response) {
       return response.json();
     }).then(function (parsedResponse) {
       console.log('parsedResponse', parsedResponse);
       thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
+
+      thisBooking.updateDOM();
+      thisBooking.getData();
       thisBooking.updateDOM();
     });
   }
@@ -208,12 +213,10 @@ export class Booking {
     const thisBooking = this;
     thisBooking.date = thisBooking.datePicker.value;
     console.log('thisBooking.datePicker.value', thisBooking.datePicker.value);
-    thisBooking.hour = utils.numberToHour(thisBooking.hourPicker.value);
+    thisBooking.hour = utils.hourToNumber(thisBooking.hourPicker.value);
     console.log('thisBooking.hour', thisBooking.hour);
     console.log(' utils.hourToNumber(thisBooking.hourPicker.value)', thisBooking.hour);
-
-    thisBooking.choosenTable = null;
-
+    console.log('++++++++++++++++++++++++=====================', thisBooking.booked);
     for(let table of thisBooking.dom.tables){
       let tableID = table.getAttribute(settings.booking.tableIdAttribute);
       tableID = parseInt(tableID);
