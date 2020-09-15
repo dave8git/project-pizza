@@ -174,7 +174,7 @@ export class Booking {
 
     const payload = {
       date: thisBooking.date,
-      hour: utils.numberToHour(thisBooking.hour),
+      hour: thisBooking.hour,
       table: thisBooking.tableID,
       duration: thisBooking.hoursAmount.value,
       ppl: thisBooking.peopleAmount.value,
@@ -182,6 +182,7 @@ export class Booking {
       mail: thisBooking.dom.address.value,
       starters: ['lemonWater']
     };
+    console.log('payload.hour', payload.hour);
     // for (let product in payload.products) {
     //   payload.products.push(product.getData());
     // }
