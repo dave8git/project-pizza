@@ -187,7 +187,7 @@ export class Booking {
     //   payload.products.push(product.getData());
     // }
 
-    console.log(payload);
+    // console.log(payload);
     const options = {
       method: 'POST',
       headers: {
@@ -225,7 +225,6 @@ export class Booking {
       } else {
         table.classList.remove(classNames.booking.tableBooked);
       }
-
     }
   }
 }
