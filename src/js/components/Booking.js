@@ -160,7 +160,8 @@ export class Booking {
         } else {
           reservedTable.classList.add(classNames.booking.tableBooked);
           alert('This table is unoccupied at requested date. Table was booked');
-          thisBooking.tableID = reservedTable.getAttribute('data-table');
+          thisBooking.tableID = parseInt(reservedTable.getAttribute('data-table'));
+
           console.log('____________', thisBooking.bookedTable);
         }
       });
