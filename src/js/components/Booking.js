@@ -221,7 +221,7 @@ export class Booking {
 
       table.classList.remove(classNames.booking.tableSelected);
 
-      if (thisBooking.booked[thisBooking.date] && thisBooking.booked[thisBooking.date][thisBooking.hour] && thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableID)){
+      if (thisBooking.booked[thisBooking.date] && thisBooking.booked[thisBooking.date][utils.hourToNumber(thisBooking.hour)] && thisBooking.booked[thisBooking.date][utils.hourToNumber(thisBooking.hour)].includes(tableID)){
         table.classList.add(classNames.booking.tableBooked);
       } else {
         table.classList.remove(classNames.booking.tableBooked);
