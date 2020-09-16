@@ -93,8 +93,9 @@ export class Booking {
         ]);
       })
       .then(function ([bookings, eventsCurrent, eventsRepeat]) {
-        console.log('EVENTS_CURRENT', eventsCurrent);
+
         thisBooking.parseData(bookings, eventsCurrent, eventsRepeat);
+        console.log('EVENTS_CURRENT', eventsCurrent);
       });
 
   }
