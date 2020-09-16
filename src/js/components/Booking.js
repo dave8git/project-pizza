@@ -176,7 +176,7 @@ export class Booking {
 
     const payload = {
       date: thisBooking.date,
-      hour: thisBooking.hour,
+      hour: thisBooking.hour.value,
       table: thisBooking.tableID,
       duration: thisBooking.hoursAmount.value,
       ppl: thisBooking.peopleAmount.value,
