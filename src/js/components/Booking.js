@@ -214,7 +214,7 @@ export class Booking {
     const thisBooking = this;
     thisBooking.date = thisBooking.datePicker.value;
     console.log('thisBooking.datePicker.value', thisBooking.datePicker.value);
-    thisBooking.hour = thisBooking.hourPicker.vlaue;
+    thisBooking.hour = thisBooking.hourPicker.value;
     console.log('thisBooking.hour', thisBooking.hour);
     console.log(' utils.hourToNumber(thisBooking.hourPicker.value)', thisBooking.hour);
     console.log('++++++++++++++++++++++++=====================', thisBooking.booked);
