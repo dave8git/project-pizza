@@ -140,9 +140,9 @@ export class Booking {
       if (!thisBooking.booked[date][tableBlockedHour]) {
         thisBooking.booked[date][tableBlockedHour] = [];
       }
+      //[1,2]
 
-
-      thisBooking.booked[date][tableBlockedHour].push(table);
+      thisBooking.booked[date][tableBlockedHour].push(table[0]);
 
       console.log('thisBooking.booked', thisBooking.booked);
       console.log('tableBlockedHouru', tableBlockedHour);
