@@ -142,10 +142,13 @@ export class Booking {
       }
       //[1,2]
 
-      thisBooking.booked[date][tableBlockedHour].push(table[0]);
+
+      for(let tab of table){
+        thisBooking.booked[date][tableBlockedHour].push(tab);
+      }
 
       console.log('thisBooking.booked', thisBooking.booked);
-      console.log('tableBlockedHouru', tableBlockedHour);
+      console.log('tableBlockedHour', tableBlockedHour);
     }
   }
 
@@ -154,14 +157,16 @@ export class Booking {
     for(let reservedTable of thisBooking.dom.tables) {
       console.log('stoliki', reservedTable);
 
+
       reservedTable.addEventListener('click', function(event) {
         event.preventDefault();
+        let tableID = [];
         if(reservedTable.classList.contains(classNames.booking.tableBooked)) {
           alert('This table is occupied at this hour! Pick a different table.');
         } else {
           reservedTable.classList.add(classNames.booking.tableBooked);
           alert('This table is unoccupied at requested date. Table was booked');
-          thisBooking.tableID = parseInt(reservedTable.getAttribute('data-table'));
+          tableID.push(parseInt(reservedTable.getAttribute('data-table')));
 
           console.log('____________', thisBooking.bookedTable);
         }
