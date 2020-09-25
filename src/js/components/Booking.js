@@ -169,7 +169,7 @@ export class Booking {
           reservedTable.classList.add(classNames.booking.tableBooked);
           alert('This table is unoccupied at requested date. Table was booked');
           tableID.push(parseInt(reservedTable.getAttribute('data-table')));
-
+          console.log('tableID', tableID);
           console.log('____________', thisBooking.bookedTable);
         }
       });
@@ -192,6 +192,7 @@ export class Booking {
       mail: thisBooking.dom.address.value,
       starters: ['lemonWater']
     };
+    console.log('payload-tableID', thisBooking.tableID);
     console.log('payload', payload);
     // for (let product in payload.products) {
     //   payload.products.push(product.getData());
