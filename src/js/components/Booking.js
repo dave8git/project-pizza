@@ -168,7 +168,7 @@ export class Booking {
         } else {
           reservedTable.classList.add(classNames.booking.tableBooked);
           alert('This table is unoccupied at requested date. Table was booked');
-          tableID.push(parseInt(reservedTable.getAttribute('data-table')));
+          thisBooking.tableID.push(parseInt(reservedTable.getAttribute('data-table')));
           console.log('tableID', tableID);
           console.log('____________', thisBooking.bookedTable);
         }
