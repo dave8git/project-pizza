@@ -49,6 +49,7 @@ export class Booking {
     thisBooking.hoursAmount = new AmountWidget(thisBooking.dom.hoursAmount);
     thisBooking.datePicker = new DatePicker(thisBooking.dom.datePicker);
     thisBooking.hourPicker = new HourPicker(thisBooking.dom.hourPicker);
+    thisBooking.tableID = [];
 
     thisBooking.dom.wrapper.addEventListener('updated',function() {
       thisBooking.updateDOM();
@@ -135,20 +136,21 @@ export class Booking {
 
     const lastBookedHour = bookingHour + duration;
 
-    for (let tableBlockedHour = bookingHour; tableBlockedHour < lastBookedHour; tableBlockedHour += .5) {
-
+    for (
+      let tableBlockedHour = bookingHour;
+      tableBlockedHour < lastBookedHour;
+      tableBlockedHour += 0.5
+    ) {
       if (!thisBooking.booked[date][tableBlockedHour]) {
         thisBooking.booked[date][tableBlockedHour] = [];
       }
       //[1,2]
 
-
-      for(let tab of table){
+      for (let tab of table) {
         thisBooking.booked[date][tableBlockedHour].push(tab);
       }
 
-      console.log('thisBooking.booked', thisBooking.booked);
-      console.log('tableBlockedHour', tableBlockedHour);
+
     }
   }
 
