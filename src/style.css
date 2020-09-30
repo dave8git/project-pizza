@@ -89,6 +89,10 @@
   margin-top: 0.25em;
 }
 
+.overlay {
+  display: none;
+}
+
 /*----------------*/
 
 .carousel-inner {
@@ -159,4 +163,20 @@ img {
   z-index: 2;
   top: 0;
   right: 0;
+  display: none;
+  transition: .2s;
+}
+
+.single-img:hover .overlay {
+  display: flex;
+}
+
+.fas {
+  font-size: 30px;
+  color: white;
+  transition: .2s;
+}
+
+.fas:hover {
+  color: orange;
 }
