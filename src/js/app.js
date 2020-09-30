@@ -58,7 +58,8 @@ const app = {
     }
 
     thisApp.activatePage(pagesMatchingHash.length ? pagesMatchingHash[0].id : thisApp.pages[0].id);
-    
+
+
 
     for (let link of thisApp.navLinks) {
       link.addEventListener('click', function (event) {
@@ -90,9 +91,9 @@ const app = {
   },
 
   initBooking: function() {
-    const thisApp = this; 
-    const reservationWidget = document.querySelector(select.containerOf.booking); 
- 
+    const thisApp = this;
+    const reservationWidget = document.querySelector(select.containerOf.booking);
+
     thisApp.booking = new Booking(reservationWidget);
 
     console.log('BOOKING', thisApp.booking);
@@ -108,7 +109,7 @@ const app = {
     thisApp.initData();
     // thisApp.initMenu();
     thisApp.initCart();
-    thisApp.initBooking(); 
+    thisApp.initBooking();
   },
 };
 app.init();
